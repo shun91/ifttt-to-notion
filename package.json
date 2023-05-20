@@ -1,0 +1,17 @@
+{
+  "name": "ifttt-to-notion",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "functions-framework --source=dist/ --target=helloHttp"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.2.0",
+    "@notionhq/client": "^2.2.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
