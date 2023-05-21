@@ -1,6 +1,7 @@
 import * as functions from "@google-cloud/functions-framework";
 import { Client } from "@notionhq/client";
 
+const accessToken = process.env.ACCESS_TOKEN;
 const apiKey = process.env.NOTION_API_KEY;
 const databaseId = "50c2c7504a404f30bc7a222e8b565396";
 
@@ -9,6 +10,8 @@ const notion = new Client({ auth: apiKey });
 export const helloHttp = functions.http(
   "helloHttp",
   async (req: functions.Request, res: functions.Response) => {
+    console.log("★authorization:", req.headers.authorization);
+
     const url = "https://twitter.com/kojo_73/status/3874734738";
     const text = "for gcf";
 
