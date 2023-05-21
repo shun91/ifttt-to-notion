@@ -1,6 +1,14 @@
 import * as functions from "@google-cloud/functions-framework";
 import { Client } from "@notionhq/client";
 import { IncomingHttpHeaders } from "node:http";
+import { convertToISO8601 } from "./convertToISO8601";
+
+type RequestBody = {
+  text: string;
+  userName: string;
+  linkToTweet: string;
+  createdAt: string;
+};
 
 const accessToken = process.env.ACCESS_TOKEN;
 const apiKey = process.env.NOTION_API_KEY;
@@ -23,11 +31,10 @@ export const helloHttp = functions.http(
       return;
     }
 
-    console.log("★body:", req.body);
-    console.log("★bodyText:", req.body.text);
+    const body: RequestBody = req.body;
 
-    const url = "https://twitter.com/kojo_73/status/3874734738";
-    const text = "for gcf";
+    const url = body.linkToTweet;
+    const text = body.text;
 
     try {
       const response = await notion.pages.create({
@@ -55,7 +62,7 @@ export const helloHttp = functions.http(
           tweet_created_at: {
             type: "date",
             date: {
-              start: new Date().toISOString(),
+              start: convertToISO8601(body.createdAt),
             },
           },
           url: {
