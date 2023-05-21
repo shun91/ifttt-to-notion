@@ -12,6 +12,8 @@ const authorize = (headers: IncomingHttpHeaders) => {
   return headers.authorization === `Bearer ${accessToken}`;
 };
 
+functions.http;
+
 export const helloHttp = functions.http(
   "helloHttp",
   async (req: functions.Request, res: functions.Response) => {
@@ -22,6 +24,9 @@ export const helloHttp = functions.http(
       res.status(401).json(error);
       return;
     }
+
+    console.log("★body:", req.body);
+    console.log("★bodyText:", req.body.text);
 
     const url = "https://twitter.com/kojo_73/status/3874734738";
     const text = "for gcf";
