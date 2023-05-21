@@ -35,7 +35,7 @@ jobs:
       - id: "deploy"
         uses: "google-github-actions/deploy-cloud-functions@v1"
         with:
-          name: "ifttt-to-notion"
+          name: "helloHttp"
           runtime: "nodejs18"
 
       - id: "health-check"
