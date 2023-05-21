@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  job_id:
+  deploy:
     runs-on: "ubuntu-latest"
     permissions:
       contents: "read"
