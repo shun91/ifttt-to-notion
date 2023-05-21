@@ -12,8 +12,6 @@ const authorize = (headers: IncomingHttpHeaders) => {
   return headers.authorization === `Bearer ${accessToken}`;
 };
 
-functions.http;
-
 export const helloHttp = functions.http(
   "helloHttp",
   async (req: functions.Request, res: functions.Response) => {
