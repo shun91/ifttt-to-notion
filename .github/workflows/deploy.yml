@@ -37,6 +37,7 @@ jobs:
         with:
           name: "helloHttp"
           runtime: "nodejs18"
+          region: "asia-northeast1"
 
       - id: "health-check"
         run: 'curl "${{ steps.deploy.outputs.url }}"'
