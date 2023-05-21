@@ -38,6 +38,7 @@ jobs:
           name: "helloHttp"
           runtime: "nodejs18"
           region: "asia-northeast1"
+          env_vars: "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}"
 
       - id: "health-check"
         run: 'curl "${{ steps.deploy.outputs.url }}"'
