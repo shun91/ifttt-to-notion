@@ -1,6 +1,10 @@
+type MonthMap = {
+  [key: string]: string;
+};
+
 export function convertToISO8601(dateString: string): string {
   // 月の名前と略称を数字にマッピング
-  const months = {
+  const months: MonthMap = {
     January: "01",
     February: "02",
     March: "03",
@@ -38,8 +42,11 @@ export function convertToISO8601(dateString: string): string {
   let [, month, day, year, time, period] = match;
 
   // 月の名前または略称を数字に変換
-  month = months[month];
-
+  if (months[month]) {
+    month = months[month];
+  } else {
+    throw new Error("Invalid month");
+  }
   // 日付が一桁の場合は先頭に0を付ける
   if (day.length === 1) {
     day = "0" + day;
@@ -62,8 +69,3 @@ export function convertToISO8601(dateString: string): string {
   // 結果を返す
   return isoString;
 }
-
-const inputDate = "May 13, 2023 at 03:06PM";
-const outputDate = convertToISO8601(inputDate);
-
-console.log(outputDate);
