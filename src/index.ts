@@ -40,7 +40,7 @@ export const helloHttp = functions.http(
       const response = await notion.pages.create({
         parent: { database_id: databaseId },
         properties: {
-          name: {
+          title: {
             title: [
               {
                 text: {
