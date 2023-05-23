@@ -44,7 +44,7 @@ export const helloHttp = functions.http(
             title: [
               {
                 text: {
-                  content: url,
+                  content: text,
                 },
               },
             ],
