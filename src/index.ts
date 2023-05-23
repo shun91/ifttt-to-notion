@@ -20,6 +20,14 @@ const authorize = (headers: IncomingHttpHeaders) => {
   return headers.authorization === `Bearer ${accessToken}`;
 };
 
+const extractId = (url: string) => {
+  const idStr = url.match(/status\/(\d+)/)?.[1];
+  if (!idStr) {
+    throw new Error("idを取得できませんでした");
+  }
+  return parseInt(idStr);
+};
+
 export const helloHttp = functions.http(
   "helloHttp",
   async (req: functions.Request, res: functions.Response) => {
@@ -35,6 +43,7 @@ export const helloHttp = functions.http(
 
     const url = body.linkToTweet;
     const text = body.text;
+    const id = extractId(url);
 
     try {
       const response = await notion.pages.create({
@@ -67,6 +76,10 @@ export const helloHttp = functions.http(
           },
           url: {
             url: url,
+          },
+          id: {
+            type: "number",
+            number: id,
           },
         },
       });
