@@ -1,8 +1,17 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc"; // UTC plugin
+import timezone from "dayjs/plugin/timezone"; // timezone plugin
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 type MonthMap = {
   [key: string]: string;
 };
 
-export function convertToISO8601(dateString: string): string {
+export function convertToISO8601(
+  dateString: string,
+  tz = "Asia/Tokyo"
+): string {
   // 月の名前と略称を数字にマッピング
   const months: MonthMap = {
     January: "01",
@@ -47,6 +56,7 @@ export function convertToISO8601(dateString: string): string {
   } else {
     throw new Error("Invalid month");
   }
+
   // 日付が一桁の場合は先頭に0を付ける
   if (day.length === 1) {
     day = "0" + day;
@@ -60,11 +70,11 @@ export function convertToISO8601(dateString: string): string {
     hours = "00";
   }
 
-  // Dateオブジェクトを作成
-  const dateObj = new Date(`${year}-${month}-${day}T${hours}:${minutes}`);
+  // Day.jsオブジェクトを作成し、タイムゾーンを指定
+  const dateObj = dayjs.tz(`${year}-${month}-${day}T${hours}:${minutes}`, tz);
 
   // ISO 8601形式の文字列に変換
-  const isoString = dateObj.toISOString();
+  const isoString = dateObj.format();
 
   // 結果を返す
   return isoString;

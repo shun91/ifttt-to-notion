@@ -5,14 +5,17 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "functions-framework --source=dist/ --target=helloHttp"
+    "dev": "functions-framework --source=dist/ --target=helloHttp",
+    "test": "vitest"
   },
   "dependencies": {
     "@google-cloud/functions-framework": "^3.2.0",
-    "@notionhq/client": "^2.2.5"
+    "@notionhq/client": "^2.2.5",
+    "dayjs": "^1.11.7"
   },
   "devDependencies": {
     "@types/node": "^20.2.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "^0.31.1"
   }
 }
