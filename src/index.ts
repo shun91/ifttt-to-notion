@@ -2,6 +2,7 @@ import * as functions from "@google-cloud/functions-framework";
 import { Client } from "@notionhq/client";
 import { IncomingHttpHeaders } from "node:http";
 import { convertToISO8601 } from "./convertToISO8601";
+import { parseTextAndUrl } from "./parseTextAndUrl";
 
 type RequestBody = {
   text: string;
@@ -43,7 +44,7 @@ export const helloHttp = functions.http(
     const body: RequestBody = req.body;
 
     const url = body.linkToTweet;
-    const text = body.text;
+    const text = parseTextAndUrl(body.text);
     const id = extractId(url);
     const username = body.userName;
     const type = body.type;
@@ -56,20 +57,14 @@ export const helloHttp = functions.http(
             title: [
               {
                 text: {
-                  content: text,
+                  content: body.text,
                 },
               },
             ],
           },
           text: {
             type: "rich_text",
-            rich_text: [
-              {
-                text: {
-                  content: text,
-                },
-              },
-            ],
+            rich_text: text,
           },
           tweet_created_at: {
             type: "date",
