@@ -8,6 +8,7 @@ type RequestBody = {
   userName: string;
   linkToTweet: string;
   createdAt: string;
+  type: "tweet" | "like";
 };
 
 const accessToken = process.env.ACCESS_TOKEN;
@@ -44,6 +45,8 @@ export const helloHttp = functions.http(
     const url = body.linkToTweet;
     const text = body.text;
     const id = extractId(url);
+    const username = body.userName;
+    const type = body.type;
 
     try {
       const response = await notion.pages.create({
@@ -80,6 +83,20 @@ export const helloHttp = functions.http(
           id: {
             type: "number",
             number: id,
+          },
+          username: {
+            type: "rich_text",
+            rich_text: [
+              {
+                text: {
+                  content: username,
+                },
+              },
+            ],
+          },
+          type: {
+            type: "select",
+            select: { name: type },
           },
         },
       });
