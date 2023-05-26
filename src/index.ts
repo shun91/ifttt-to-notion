@@ -85,6 +85,9 @@ export const helloHttp = functions.http(
               {
                 text: {
                   content: username,
+                  link: {
+                    url: `https://twitter.com/${username}`,
+                  },
                 },
               },
             ],
