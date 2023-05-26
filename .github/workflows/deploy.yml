@@ -35,7 +35,7 @@ jobs:
       - id: "deploy"
         uses: "google-github-actions/deploy-cloud-functions@v1"
         with:
-          name: "helloHttp"
+          name: "iftttToNotion"
           runtime: "nodejs18"
           region: "asia-northeast1"
           env_vars: "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}"

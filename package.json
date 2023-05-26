@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "dev": "functions-framework --source=dist/ --target=helloHttp",
+    "dev": "functions-framework --source=dist/ --target=iftttToNotion",
     "test": "vitest"
   },
   "dependencies": {
