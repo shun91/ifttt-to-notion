@@ -8,36 +8,49 @@ type MonthMap = {
   [key: string]: string;
 };
 
+// 月の名前と略称を数字にマッピング
+const months: MonthMap = {
+  January: "01",
+  February: "02",
+  March: "03",
+  April: "04",
+  May: "05",
+  June: "06",
+  July: "07",
+  August: "08",
+  September: "09",
+  October: "10",
+  November: "11",
+  December: "12",
+  Jan: "01",
+  Feb: "02",
+  Mar: "03",
+  Apr: "04",
+  Jun: "06",
+  Jul: "07",
+  Aug: "08",
+  Sep: "09",
+  Oct: "10",
+  Nov: "11",
+  Dec: "12",
+};
+
 export function convertToISO8601(
   dateString: string,
   tz = "Asia/Tokyo"
 ): string {
-  // 月の名前と略称を数字にマッピング
-  const months: MonthMap = {
-    January: "01",
-    February: "02",
-    March: "03",
-    April: "04",
-    May: "05",
-    June: "06",
-    July: "07",
-    August: "08",
-    September: "09",
-    October: "10",
-    November: "11",
-    December: "12",
-    Jan: "01",
-    Feb: "02",
-    Mar: "03",
-    Apr: "04",
-    Jun: "06",
-    Jul: "07",
-    Aug: "08",
-    Sep: "09",
-    Oct: "10",
-    Nov: "11",
-    Dec: "12",
-  };
+  try {
+    // Day.jsオブジェクトを作成し、タイムゾーンを指定
+    const dateObj = dayjs.tz(dateString, tz);
+
+    // ISO 8601形式の文字列に変換
+    const isoString = dateObj.format();
+
+    // 結果を返す
+    return isoString;
+  } catch {
+    // ISO8601でない場合は後続の処理で変換する
+  }
 
   // 正規表現を用いて日付と時刻を抽出
   const match = dateString.match(

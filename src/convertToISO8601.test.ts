@@ -1,6 +1,12 @@
 import { test } from "vitest";
 import { convertToISO8601 } from "./convertToISO8601";
 
+test("既にISO 8601形式の文字列はそのままパースされる", ({ expect }) => {
+  const isoDateString = "2023-01-01T12:00:00Z";
+  const result = convertToISO8601(isoDateString);
+  expect(result).toBe("2023-01-01T12:00:00+09:00");
+});
+
 test("正しい日付文字列をISO 8601に変換する", ({ expect }) => {
   const dateString = "January 1, 2023 at 12:00PM";
   const result = convertToISO8601(dateString);
