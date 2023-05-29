@@ -6,7 +6,7 @@ type Args = {
   text: string;
   username: string;
   url: string;
-  createdAt: string;
+  createdAt?: string;
   type: "tweet" | "like";
 };
 
@@ -30,52 +30,57 @@ export async function createNotionPageByTweet({
   username,
   type,
 }: Args) {
+  const properties: Parameters<typeof notion.pages.create>[0]["properties"] = {
+    title: {
+      title: [
+        {
+          text: {
+            content: text,
+          },
+        },
+      ],
+    },
+    text: {
+      type: "rich_text",
+      rich_text: parseTextAndUrl(text),
+    },
+    url: {
+      url: url,
+    },
+    id: {
+      type: "number",
+      number: extractId(url),
+    },
+    username: {
+      type: "rich_text",
+      rich_text: [
+        {
+          text: {
+            content: username,
+            link: {
+              url: `https://twitter.com/${username}`,
+            },
+          },
+        },
+      ],
+    },
+    type: {
+      type: "select",
+      select: { name: type },
+    },
+  };
+
+  if (createdAt) {
+    properties["tweet_created_at"] = {
+      type: "date",
+      date: {
+        start: convertToISO8601(createdAt),
+      },
+    };
+  }
+
   return notion.pages.create({
     parent: { database_id: databaseId },
-    properties: {
-      title: {
-        title: [
-          {
-            text: {
-              content: text,
-            },
-          },
-        ],
-      },
-      text: {
-        type: "rich_text",
-        rich_text: parseTextAndUrl(text),
-      },
-      tweet_created_at: {
-        type: "date",
-        date: {
-          start: convertToISO8601(createdAt),
-        },
-      },
-      url: {
-        url: url,
-      },
-      id: {
-        type: "number",
-        number: extractId(url),
-      },
-      username: {
-        type: "rich_text",
-        rich_text: [
-          {
-            text: {
-              content: username,
-              link: {
-                url: `https://twitter.com/${username}`,
-              },
-            },
-          },
-        ],
-      },
-      type: {
-        type: "select",
-        select: { name: type },
-      },
-    },
+    properties,
   });
 }
