@@ -68,8 +68,22 @@ yarn build
 yarn dev
 ```
 
-Web サーバーが立ち上がります。以下の URL を叩くことで動作確認できます。  
-http://localhost:8080/iftttToNotion
+Web サーバーが立ち上がります。以下の URL を叩くことで動作確認できます。
+
+```sh
+curl -i -X POST \
+   -H "Authorization:Bearer <ACCESS_TOKEN>" \
+   -H "Content-Type:application/json" \
+   -d \
+'{
+  "text": "ツイートの本文です。",
+  "userName": "shun91",
+  "linkToTweet": "https://twitter.com/shun91/status/1660249002590478332",
+  "createdAt": " May 21, 2023 at 08:39PM",
+  "type": "tweet"
+}' \
+ 'http://localhost:8080/iftttToNotion'
+```
 
 ### ユニットテスト
 
