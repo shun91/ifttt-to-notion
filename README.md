@@ -49,7 +49,7 @@ yarn build
 yarn dev
 ```
 
-Web サーバーが立ち上がります。以下の URL を叩くことで動作確認できます。
+Web サーバーが立ち上がります。以下の URL を叩くことで動作確認できます。  
 http://localhost:8080/iftttToNotion
 
 ### ユニットテスト
