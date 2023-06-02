@@ -62,6 +62,8 @@ yarn build
 
 ### ローカル実行
 
+環境変数に`NOTION_API_KEY`と`ACCESS_TOKEN`を設定して、下記コマンドを実行します。
+
 ```sh
 yarn dev
 ```
