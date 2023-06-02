@@ -7,17 +7,17 @@ IFTTT の Webhook を受け取り Notion API を叩く Google Cloud Functions。
 
 ## 使用方法
 
-### Notion の設定方法
+### Notion の設定
 
-このプロジェクトでは、Notion API を使用して、Tweet の情報を Notion のページとして作成します。そのため、Notion API キーの取得と設定、および Notion のデータベース ID の取得と設定が必要です。  
+このプロジェクトでは、Notion API を使用して、ツイートの情報を Notion のページとして作成します。そのため、Notion API キーの取得と設定、および Notion のデータベース ID の取得と設定が必要です。  
 また、データベース内のフィールドを以下のように設定する必要があります。
 
 - `title`：ページのタイトルとして使用します。
-- `text`：Tweet のテキストを保存します。タイプはリッチテキストとします。
-- `url`：Tweet の URL を保存します。タイプは URL とします。
-- `id`：Tweet の ID を保存します。タイプは Number とします。
+- `text`：ツイートのテキストを保存します。タイプはリッチテキストとします。
+- `url`：ツイートの URL を保存します。タイプは URL とします。
+- `id`：ツイートの ID を保存します。タイプは Number とします。
 - `username`：ユーザー名を保存します。タイプはリッチテキストとします。
-- `type`：Tweet のタイプ（"tweet"または"like"）を保存します。タイプは Select とします。
+- `type`：ツイートのタイプ（"ツイート"または"like"）を保存します。タイプは Select とします。
 
 ### Google Cloud Functions へのデプロイ
 
