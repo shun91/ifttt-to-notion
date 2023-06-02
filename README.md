@@ -1,8 +1,23 @@
 # ifttt-to-notion
 
-IFTTT の Webhook を受け取り Notion API を叩く Google Cloud Functions
+IFTTT の Webhook を受け取り Notion API を叩く Google Cloud Functions。
+
+ツイートを Notion に保存するために開発されました。  
+ツイートすると IFTTT のトリガーによって Google Cloud Functions にデプロイした API が呼び出され、Notion に新しいページを作成します。ページのタイトルはツイートのテキストになり、その他の情報（ユーザ名、ツイートの URL、作成日時、タイプ）もページに保存されます。
 
 ## 使用方法
+
+## Notion の設定方法
+
+このプロジェクトでは、Notion API を使用して、Tweet の情報を Notion のページとして作成します。そのため、Notion API キーの取得と設定、および Notion のデータベース ID の取得と設定が必要です。  
+また、データベース内のフィールドを以下のように設定する必要があります。
+
+- `title`：ページのタイトルとして使用します。
+- `text`：Tweet のテキストを保存します。タイプはリッチテキストとします。
+- `url`：Tweet の URL を保存します。タイプは URL とします。
+- `id`：Tweet の ID を保存します。タイプは Number とします。
+- `username`：ユーザー名を保存します。タイプはリッチテキストとします。
+- `type`：Tweet のタイプ（"tweet"または"like"）を保存します。タイプは Select とします。
 
 ### Google Cloud Functions へのデプロイ
 
@@ -14,6 +29,12 @@ IFTTT の Webhook を受け取り Notion API を叩く Google Cloud Functions
 - 適切な権限を持つサービスアカウントが必要です。このサービスアカウントの認証情報（`GCP_WORKLOAD_IDENTITY_PROVIDER`、`GCP_SERVICE_ACCOUNT`）を GitHub Secrets に設定する必要があります。
   - 参考：[GitHub Actions から Google Cloud Functions にデプロイ | blog.shgnkn.io](https://blog.shgnkn.io/github-actions-deploy-google-cloud-functions/)
 - Notion API と IFTTT の Webhook からのリクエストの認証に使用される`NOTION_API_KEY`と`ACCESS_TOKEN`も GitHub Secrets に設定する必要があります。
+
+初回デプロイ後は Google Cloud Functions 側で認証がかかっています。認証を外すには以下を参考に設定してください。
+
+[Firebase functions で 403 error "Your client does not have permission to get URL /\*\* from this server" となった場合の解決策 - Qiita](https://qiita.com/toshiaki_takase/items/ce65cd5582a80917b52f)
+
+この認証を外したとしても、 `ACCESS_TOKEN` を知らない場合は API を叩けないので問題ありません。
 
 ### IFTTT の設定
 
@@ -27,10 +48,6 @@ IFTTT で Webhook を設定するには、新しいアプレットを作成し�
 ![image](https://github.com/shun91/ifttt-to-notion/assets/8047437/d287a595-9feb-4668-98e0-a442f22f67e4)
 
 ![image](https://github.com/shun91/ifttt-to-notion/assets/8047437/e5b79403-2ae8-4c29-a36e-4dd3fb08aa6c)
-
-### Notion の設定
-
-coming soon...
 
 これで設定は完了です。  
 IFTTT で指定したアカウントでツイートすると、その内容が Notion Database に追加されます。
