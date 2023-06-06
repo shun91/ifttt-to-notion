@@ -44,14 +44,15 @@ jobs:
         run: "gcloud info"
 
       - id: "deploy"
-        run: gcloud functions deploy iftttToNotion \
-          --runtime=nodejs18 \
-          --region=asia-northeast1 \
-          --source=./ \
-          --trigger-http \
-          --allow-unauthenticated \
-          --entry-point=iftttToNotion \
-          --set-env-vars='ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}'
+        run: |
+          gcloud functions deploy iftttToNotion \
+            --runtime=nodejs18 \
+            --region=asia-northeast1 \
+            --source=./ \
+            --trigger-http \
+            --allow-unauthenticated \
+            --entry-point=iftttToNotion \
+            --set-env-vars='ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}'
 
       - id: "health-check"
         run: "curl https://asia-northeast1-ifttt-to-notion.cloudfunctions.net/iftttToNotion"
