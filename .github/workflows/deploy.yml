@@ -40,6 +40,9 @@ jobs:
         with:
           version: ">= 363.0.0"
 
+      - name: "Use gcloud CLI"
+        run: "gcloud info"
+
       - id: "deploy"
         run: gcloud functions deploy iftttToNotion \
           --runtime=nodejs18 \
