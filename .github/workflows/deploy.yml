@@ -1,3 +1,6 @@
+# See:
+# https://github.com/google-github-actions/deploy-cloud-functions/issues/304#issuecomment-1476629207
+
 name: Deploy
 
 on:
@@ -32,13 +35,21 @@ jobs:
           workload_identity_provider: "${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}"
           service_account: "${{ secrets.GCP_SERVICE_ACCOUNT }}"
 
-      - id: "deploy"
-        uses: "google-github-actions/deploy-cloud-functions@v1"
+      - id: "setup-gcloud"
+        uses: "google-github-actions/setup-gcloud@v1"
         with:
-          name: "iftttToNotion"
-          runtime: "nodejs18"
-          region: "asia-northeast1"
-          env_vars: "ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}"
+          version: ">= 363.0.0"
+
+      - id: "deploy"
+        run: gcloud functions deploy iftttToNotion \
+          --gen2 \
+          --runtime=nodejs18 \
+          --region=asia-northeast1 \
+          --source=./ \
+          --trigger-http \
+          --allow-unauthenticated \
+          --entry-point=iftttToNotion \
+          --set-env-vars=ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}
 
       - id: "health-check"
-        run: 'curl "${{ steps.deploy.outputs.url }}"'
+        run: "curl https://asia-northeast1-ifttt-to-notion.cloudfunctions.net/iftttToNotion"
