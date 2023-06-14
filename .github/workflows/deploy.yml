@@ -51,7 +51,6 @@ jobs:
             --region=asia-northeast1 \
             --source=./ \
             --trigger-http \
-            --allow-unauthenticated \
             --entry-point=iftttToNotion \
             --set-env-vars="ACCESS_TOKEN=${{ secrets.ACCESS_TOKEN }},NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}"
 
