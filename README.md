@@ -90,3 +90,8 @@ curl -i -X POST \
 ```sh
 yarn test
 ```
+
+## scripts
+
+過去のツイートなどを一括で Notion に保存するためのスクリプトです。  
+詳細は[こちら](./src/scripts/README.md)を確認してください。
