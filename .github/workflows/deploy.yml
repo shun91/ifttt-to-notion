@@ -45,7 +45,7 @@ jobs:
 
       - id: "deploy"
         run: |
-          gcloud functions deploy iftttToNotion-gen2 \
+          gcloud functions deploy iftttToNotion \
             --gen2 \
             --runtime=nodejs18 \
             --region=asia-northeast1 \
