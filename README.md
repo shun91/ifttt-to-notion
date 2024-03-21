@@ -1,6 +1,6 @@
 # ifttt-to-notion
 
-IFTTT の Webhook を受け取り Notion API を叩く Google Cloud Functions。
+IFTTT の Webhook を受け取り Notion API を叩く Google Cloud Functions
 
 ツイートを Notion に保存するために開発されました。  
 ツイートすると IFTTT のトリガーによって Google Cloud Functions にデプロイした API が呼び出され、Notion に新しいページを作成します。ページのタイトルはツイートのテキストになり、その他の情報（ユーザ名、ツイートの URL、作成日時、タイプ）もページに保存されます。
