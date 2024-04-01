@@ -1,7 +1,7 @@
 import { parseTextAndUrl } from "./parseTextAndUrl"; // 適切なパスに置き換えてください
 import { test, expect } from "vitest";
 
-test("URLを含むテキストをパースする", () => {
+test("URLを含むテキストをパースする", async () => {
   const testInput =
     "こんにちは、このリンクを見てください：https://example.com またこちらも：https://openai.com";
   const expectedOutput = [
@@ -37,12 +37,12 @@ test("URLを含むテキストをパースする", () => {
     },
   ];
 
-  const result = parseTextAndUrl(testInput);
+  const result = await parseTextAndUrl(testInput);
 
   expect(result).toEqual(expectedOutput);
 });
 
-test("URLを含まないテキストをパースする", () => {
+test("URLを含まないテキストをパースする", async () => {
   const testInput = "こんにちは、このテキストにはURLが含まれていません";
   const expectedOutput = [
     {
@@ -53,12 +53,12 @@ test("URLを含まないテキストをパースする", () => {
     },
   ];
 
-  const result = parseTextAndUrl(testInput);
+  const result = await parseTextAndUrl(testInput);
 
   expect(result).toEqual(expectedOutput);
 });
 
-test("テキストがURLのみである場合のパース", () => {
+test("テキストがURLのみである場合のパース", async () => {
   const testInput = "https://onlyurl.com";
   const expectedOutput = [
     {
@@ -72,7 +72,7 @@ test("テキストがURLのみである場合のパース", () => {
     },
   ];
 
-  const result = parseTextAndUrl(testInput);
+  const result = await parseTextAndUrl(testInput);
 
   expect(result).toEqual(expectedOutput);
 });

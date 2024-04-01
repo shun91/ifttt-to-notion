@@ -1,4 +1,26 @@
-export function parseTextAndUrl(input: string) {
+/**
+ * 短縮されたURLを元のURLに変換する
+ */
+async function replaceShortUrl(shortUrl: string) {
+  try {
+    // fetchリクエストを送信し、リダイレクトを手動で処理する
+    const response = await fetch(shortUrl, { redirect: "manual" });
+
+    if (response.status >= 300 && response.status < 400) {
+      // リダイレクトレスポンスの場合、LocationヘッダーからURLを取得
+      return response.headers.get("Location") ?? shortUrl;
+    }
+
+    // リダイレクトがない場合は、元のURLをそのまま返す
+    return shortUrl;
+  } catch (error) {
+    // エラーで元のURLを取得できなかった場合は、短縮URLをそのまま返す
+    console.warn(error);
+    return shortUrl;
+  }
+}
+
+export async function parseTextAndUrl(input: string) {
   // Define regex to detect URLs in the input string
   const urlRegex = /(https?:\/\/[^\s]+)/g;
 
@@ -8,7 +30,7 @@ export function parseTextAndUrl(input: string) {
 
   // Loop over the input string to find URLs and split the text around them
   while ((match = urlRegex.exec(input)) !== null) {
-    const matchedUrl = match[0];
+    const matchedUrl = await replaceShortUrl(match[0]);
 
     // Extract the text before the URL
     if (match.index > lastIndex) {

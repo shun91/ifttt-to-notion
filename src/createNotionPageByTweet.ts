@@ -42,7 +42,7 @@ export async function createNotionPageByTweet({
     },
     text: {
       type: "rich_text",
-      rich_text: parseTextAndUrl(text),
+      rich_text: await parseTextAndUrl(text),
     },
     url: {
       url: url,
