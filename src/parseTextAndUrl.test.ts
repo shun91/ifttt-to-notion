@@ -1,5 +1,17 @@
+import { setupServer } from "msw/node";
 import { parseTextAndUrl } from "./parseTextAndUrl"; // 適切なパスに置き換えてください
-import { test, expect } from "vitest";
+import { test, expect, beforeAll, afterAll, afterEach } from "vitest";
+import { rest } from "msw";
+
+const server = setupServer(
+  rest.get("*", (req, res, ctx) => {
+    return res(ctx.json({ data: "mocked data" }));
+  })
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
 test("URLを含むテキストをパースする", async () => {
   const testInput =
