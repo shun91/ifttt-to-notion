@@ -88,3 +88,29 @@ test("テキストがURLのみである場合のパース", async () => {
 
   expect(result).toEqual(expectedOutput);
 });
+
+test("短縮URLの場合はリダイレクトレスポンスのLocationヘッダーから元のURLを取得して変換する", async () => {
+  const testInput = "http://redirect.com";
+  const originalUrl = "http://finalurl.com";
+  const expectedOutput = [
+    {
+      type: "text",
+      text: {
+        content: originalUrl,
+        link: {
+          url: originalUrl,
+        },
+      },
+    },
+  ];
+
+  server.use(
+    rest.get(testInput, (req, res, ctx) => {
+      return res(ctx.status(302), ctx.set("Location", originalUrl));
+    })
+  );
+
+  const result = await parseTextAndUrl(testInput);
+
+  expect(result).toEqual(expectedOutput);
+});
