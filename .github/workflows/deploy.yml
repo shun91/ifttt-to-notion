@@ -21,7 +21,7 @@ jobs:
       - id: "setup-node"
         uses: "actions/setup-node@v2"
         with:
-          node-version: 18.x
+          node-version: 24.x
 
       - id: "install"
         run: yarn install --frozen-lockfile
@@ -47,7 +47,7 @@ jobs:
         run: |
           gcloud functions deploy iftttToNotion \
             --gen2 \
-            --runtime=nodejs18 \
+            --runtime=nodejs24 \
             --region=asia-northeast1 \
             --source=./ \
             --trigger-http \
