@@ -37,7 +37,7 @@ const months: MonthMap = {
 
 export function convertToISO8601(
   dateString: string,
-  tz = "Asia/Tokyo"
+  tz = "Asia/Tokyo",
 ): string {
   try {
     // Day.jsオブジェクトを作成し、タイムゾーンを指定
@@ -54,10 +54,10 @@ export function convertToISO8601(
 
   // 正規表現を用いて日付と時刻を抽出
   const match = dateString.match(
-    /(\w+)\s+(\d+),\s+(\d+)\s+at\s+(\d+:\d+)(AM|PM)/
+    /(\w+)\s+(\d+),\s+(\d+)\s+at\s+(\d+:\d+)(AM|PM)/,
   );
   if (!match) {
-    throw new Error("Invalid format");
+    throw new Error(`Invalid format: ${dateString}`);
   }
 
   // 抽出した値を変数に代入
@@ -67,7 +67,7 @@ export function convertToISO8601(
   if (months[month]) {
     month = months[month];
   } else {
-    throw new Error("Invalid month");
+    throw new Error(`Invalid month: ${dateString}`);
   }
 
   // 日付が一桁の場合は先頭に0を付ける
